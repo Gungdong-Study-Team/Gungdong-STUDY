@@ -1,3 +1,4 @@
+// 6개째
 class Solution {
     static int answer = 0;
     public int solution(int[] numbers, int target) {
