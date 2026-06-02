@@ -75,8 +75,8 @@ class Solution {
                 }
                 
                 if(!visited[labber][nr][nc]){
-                     q.add(new Node(nr,nc,labber,cur.dist+1));
-                visited[labber][nr][nc] = true;
+                    q.add(new Node(nr,nc,labber,cur.dist+1));
+                    visited[labber][nr][nc] = true;
                 }
             }
         }
