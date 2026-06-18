@@ -12,6 +12,7 @@
 | **강병구** | 🏃‍♂️ 스터디원 | [@강병구](https://github.com/byegu) |
 | **명현철** | 🏃‍♂️ 스터디원 | [@명현철](https://github.com/MyeongHyeonCheol) |
 | **강동현** | 🏃‍♂️ 스터디원 | [@강동현](https://github.com/East-kang) |
+| **이어진** | 🏃‍♂️ 스터디원 | [@이어진](https://github.com/win929) |
 
 <br>
 
