@@ -1,0 +1,176 @@
+# 노란불 신호등
+
+| 항목 | 내용 |
+|---|---|
+| 사이트 | 프로그래머스 |
+| 난이도 | Lv. 1 |
+| 날짜 | 2026-06-20 |
+| 알고리즘 | 브루트포스, 구현, 수학, 정수론, 유클리드 호제법 |
+
+## 문제 링크
+
+[2025 카카오 하반기 1차 > 노란불 신호등](https://school.programmers.co.kr/learn/courses/30/lessons/468371)
+
+## 풀이 과정
+
+처음엔 최소공약수와 최소공배수를 이용해서 푸는 수학문제라고 생각했는데 머리가 너무 아파서 그냥 무식하게 for문을 돌렸다.
+특히 답이 없는 경우를 최소공배수만큼 for문을 돌려봤는데도 안 나왔을 때로 하고 싶었는데 최소공배수를 구하는 코드를 모르겠어서 찾아봤다.
+
+## 나의 코드
+
+```java
+import java.util.*;
+
+class Solution {
+    public int solution(int[][] signals) {
+        int l = 0;
+        
+        Color[] colors = new Color[signals.length];
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = new Color(signals[i]);
+            
+            if (i == 0) {
+                l = sum(colors[i].colorTime);
+            } else {
+                l = lcm(l, sum(colors[i].colorTime));
+            }
+        }
+    
+        int answer = 0;
+        boolean flag = true;
+        
+        while (flag) {
+            answer++;
+            
+            for (int i = 0; i < colors.length; i++) {
+                colors[i].nextTime();
+            }
+            
+            flag = false;
+            for (int i = 0; i < colors.length; i++) {
+                if (colors[i].nowColor != 1) {
+                    flag = true;
+                    break;
+                }
+            }
+            
+            if (answer == l) {
+                answer = -1;
+                break;
+            }
+        }
+        
+        return answer;
+    }
+    
+    static int sum(int[] arr) {
+        int temp = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            temp += arr[i];
+        }
+
+        return temp;
+    }
+
+    static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = a % b;
+            a = b;
+            b = temp;
+        }
+
+        return a;
+    }
+
+    static int lcm(int a, int b) {
+        return a / gcd(a, b) * b;
+    }
+}
+
+class Color {
+    int nowTime;
+    int nowColorTime;
+    
+    int[] colorTime;
+    int nowColor;
+    
+    Color(int[] colorTime) {
+        this.nowTime = 0;
+        this.nowColorTime = 0;
+        this.colorTime = colorTime;
+        this.nowColor = 0;
+    }
+    
+    void nextTime() {
+        nowTime++;
+        
+        if (colorTime[nowColor] == nowColorTime) {
+            nowColor = (nowColor + 1) % 3;
+            nowColorTime = 1;
+        } else {
+            nowColorTime++;
+        }
+    }
+}
+```
+
+## 수정된 코드
+
+```java
+import java.util.*;
+
+class Solution {
+    public int solution(int[][] signals) {
+        int limit = 1;
+
+        for (int[] signal : signals) {
+            int cycle = signal[0] + signal[1] + signal[2];
+            limit = lcm(limit, cycle);
+        }
+
+        for (int time = 1; time <= limit; time++) {
+            boolean allYellow = true;
+
+            for (int[] signal : signals) {
+                int green = signal[0];
+                int yellow = signal[1];
+                int cycle = signal[0] + signal[1] + signal[2];
+
+                int position = (time - 1) % cycle + 1;
+
+                if (!(green < position && position <= green + yellow)) {
+                    allYellow = false;
+                    break;
+                }
+            }
+
+            if (allYellow) {
+                return time;
+            }
+        }
+
+        return -1;
+    }
+
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = a % b;
+            a = b;
+            b = temp;
+        }
+
+        return a;
+    }
+
+    private int lcm(int a, int b) {
+        return a / gcd(a, b) * b;
+    }
+}
+```
+
+## 회고
+
+이 문제도 예전에 한 번 시도했던 문제였는데, 코덱스에게 최고의 코드를 물어보다가 예전에 어떻게 풀었는지 기억이 났다.
+그 때는 green, yellow, red을 각각 `(1 ~ G)`, `(G+1 ~ G+Y)`, `(G+Y+1 ~ G+Y+R)`로 했었는데 지금은 그냥 무식하게 time을 세서 구했다.
+gcd와 lcm 코드는 외워둬야겠다…
