@@ -13,6 +13,7 @@
 | **명현철** | 🏃‍♂️ 스터디투 | [@명현철](https://github.com/MyeongHyeonCheol) |
 | **강동현** | 🏃‍♂️ 스터디쓰리 | [@강동현](https://github.com/East-kang) |
 | **이어진** | 🏃‍♂️ 스터디포 | [@이어진](https://github.com/win929) |
+| **양해미** | 🏃‍♂️ 스터디파입 | [@양해미](https://github.com/yanghaemi) |
 
 <br>
 
