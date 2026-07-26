@@ -1,0 +1,14 @@
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        int left = 0, right = 0, num = 0;
+        while(left <= n) {
+            if(num < n && right < n) { num += ++right; }
+            else { 
+                if(num == n) { answer++; }
+                num -= ++left;
+            }
+        }
+        return answer;
+    }
+}
