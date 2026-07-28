@@ -1,0 +1,25 @@
+import java.util.*;
+class Solution {
+    public int solution(String s) {
+        int answer = -1;
+        Deque<Character> stack = new ArrayDeque<>();
+        for(int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
+            if(stack.isEmpty()){
+                stack.offer(c);
+                continue;
+            }
+            
+            if(stack.peekLast() == c) {
+                stack.pollLast();
+            } else {
+                stack.offer(c);
+            }
+        }
+        
+        // while(stack.isEmpty()) {
+        //     System.out.print(stack.poll());
+        // }
+        return stack.isEmpty() ? 1 : 0;
+    }
+}
