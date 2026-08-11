@@ -1,0 +1,56 @@
+import java.util.*;
+class Solution {
+    static int[] dr = {0, 0, 1, -1};
+    static int[] dc = {1, -1, 0, 0};
+    static int c, r, cnt = 0;
+    static boolean[][] vis;
+    static char grid[][];
+    
+    public int[] solution(String[] maps) {
+        List<Integer> answer = new ArrayList<>();
+        int idx = 0;
+        c = maps[0].length();
+        r = maps.length;
+        vis = new boolean[r][c];
+        grid = new char[r][c];
+        for(int i=0; i<r; i++) {
+            for(int j=0; j<c; j++) {
+                grid[i][j] = maps[i].charAt(j);
+            }
+        }
+        
+        for(int i=0; i<r; i++) {
+            for(int j=0; j<c; j++) {
+                if(!vis[i][j] && grid[i][j] != 'X') {
+                    cnt = 0;
+                    recursive(i, j);
+                    answer.add(cnt);
+                }
+            }
+        }
+        
+        int res[];
+        if(answer.isEmpty()) {
+            res = new int[1];
+            res[0] = -1;
+        }
+        else{
+            res = answer.stream().mapToInt(Integer::intValue).sorted().toArray();
+        }
+        return res;
+    }
+    
+    public static void recursive(int cr, int cc) {
+        cnt += grid[cr][cc] - '0';
+        vis[cr][cc] = true;
+        
+        for(int i=0; i<4; i++) {
+            int nr = cr + dr[i];
+            int nc = cc + dc[i];
+            
+            if(nr < 0 || nr >= r || nc < 0 || nc >= c) continue;
+            if(vis[nr][nc] || grid[nr][nc] == 'X') continue;
+            recursive(nr, nc);
+        }
+    }
+}
