@@ -25,5 +25,3 @@ FROM FISH_INFO;
 ## 회고
 
 `CONCAT`외워야겠다.
-
-## 관련 알고리즘 정리
