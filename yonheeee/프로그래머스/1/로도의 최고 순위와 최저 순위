@@ -1,0 +1,96 @@
+## 풀이방법
+로또의 번호가 지워져서 몇몇의 숫자가 안보임</br>
+그래서 안보이는 숫자가 다 맞는다고 가정하는 최고순위와 다 틀린다고 가정하는 최저순위를 구하는 문제</br>
+그냥 문제 이해하고 구현</br>
+
+## 코드
+```
+//lottos : 구매한 로또 번호, win_num : 당첨 번호 배열
+// answer[많이 맞혔을 때 등수, 틀렸을때 등수]
+// 
+class Solution {
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int[] answer = new int[2];
+        
+        int matchcnt = 0; 
+        int zerocnt = 0;
+        
+        //맞는다는 가정
+        for(int num : lottos){
+            if(num == 0){
+                zerocnt++;
+            }
+        }
+        
+        //진짜 맞았을 경우
+        for(int num : win_nums){
+            for(int i = 0; i < lottos.length; i++){
+                if(lottos[i] == num){
+                    matchcnt++;
+                }
+            }
+        }
+        
+        int wincnt = matchcnt + zerocnt;
+        int losecnt = matchcnt;
+        System.out.println(wincnt + " " + losecnt);
+        
+        if(wincnt == 0){
+            wincnt = 6;
+        }else{
+            wincnt=7 - wincnt;
+        }
+               
+        if(losecnt == 0){
+            losecnt = 6;
+        }else{ 
+            losecnt=7 - losecnt;
+        }
+
+        for(int i = 0; i < answer.length; i++){
+            if(i==0)answer[i] = wincnt;
+            if(i==1) answer[1] = losecnt;
+        }
+        return answer;
+    }
+}
+```
+
+## 회고
+그냥 문제 이해하고 구현으로 막 풀었는데 풀고보니 풀이가 너무 더러운듯...</br>
+복잡도 이런것도 생각안하고 그냥 for문 돌리고 if문 막 쓰고</br>
+그래도 덕분에 구현하는 감을 찾아가는 중일지도..??</br>
+솔직히 구현 문제라고 하기도 어렵긴 해~</br>
+
+## AI 코드
+```
+class Solution {
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int zero = 0;
+        int match = 0;
+
+        for (int lotto : lottos) {
+            if (lotto == 0) {
+                zero++;
+                continue;
+            }
+
+            for (int win : win_nums) {
+                if (lotto == win) {
+                    match++;
+                    break;
+                }
+            }
+        }
+
+        int max = match + zero;
+        int min = match;
+
+        return new int[]{rank(max), rank(min)};
+    }
+
+    private int rank(int count) {
+        return count < 2 ? 6 : 7 - count;
+    }
+}
+```
